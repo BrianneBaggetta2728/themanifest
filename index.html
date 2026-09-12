@@ -51,9 +51,15 @@
   .gnode[data-state="done"]::after{content:"";position:absolute;top:-26px;left:-14px;right:50%;height:4px;background:var(--turquoise);box-shadow:0 0 6px rgba(68,189,169,.8)}
   .gnode[data-state="done"]:first-child::after{left:0}
   .gnode[data-state="now"]::after{content:"";position:absolute;top:-26px;left:-14px;right:50%;height:4px;background:var(--turquoise);box-shadow:0 0 6px rgba(68,189,169,.8)}
-  .chip{display:flex;justify-content:center;align-items:center;gap:8px;border:1.5px solid var(--turquoise-dim);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;color:var(--arctic);text-decoration:none;background:rgba(68,189,169,.06)}
+  .gateline:not(.open) .gcard{display:none}
+  .chip .car{font-size:11px;color:var(--arctic-2);transition:transform .2s}
+  .gateline.open .chip .car{transform:rotate(180deg)}
+  .glink{margin:10px 0 0;font-size:12px}
+  .glink a{color:var(--turquoise);font-weight:800;text-decoration:none}
+  .glink a:hover{text-decoration:underline}
+  .chip{font-family:inherit;width:100%;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;border:1.5px solid var(--turquoise-dim);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;color:var(--arctic);text-decoration:none;background:rgba(68,189,169,.06)}
   .chip b{color:var(--turquoise);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
-  .chip:hover{text-decoration:none;border-color:var(--turquoise)}
+  .chip:hover{border-color:var(--turquoise);background:rgba(68,189,169,.14)}
   .gnode[data-state="now"] .chip{border-color:var(--pink);box-shadow:0 0 12px rgba(232,31,118,.35);color:#fff}
   .gnode[data-state="now"] .chip b{color:var(--pink)}
   .gnode[data-state="done"] .chip{opacity:.75}
@@ -191,12 +197,12 @@
 <!--
   HOW TO UPDATE THE GATE LINE
   Each gate is one <article class="gnode" data-state="..."> below. Change data-state to done, now, or next. Save.
-  Each gate chip links to the Asana project. To land on the gate's filtered view instead: in Asana, filter the project on GATE = that gate,
-  save it as a view, copy the view URL, and paste it over the href on that gate's chip. One URL per gate, nothing else to touch.
+  Clicking any gate pill shows or hides all six cards. Each card's Work in Asana link points at that gate's saved view in the project;
+  to change one, edit the href on that card's glink. Kickoff Prep points at the project itself.
 -->
   <section class="gateline" aria-label="Kickoff Prep and the five gates">
     <article class="gnode" data-state="done">
-      <a class="chip" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Kickoff</b>Prep</a>
+      <button class="chip" type="button" aria-expanded="false"><b>Kickoff</b>Prep<span class="car" aria-hidden="true">&#9662;</span></button>
       <div class="gcard">
         <p class="steps">Build Prototypes</p>
         <ul>
@@ -205,10 +211,11 @@
           <li>ERD for Yogu</li>
           <li>Portal 1 field map</li>
         </ul>
+        <p class="glink"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener">Work in Asana</a></p>
       </div>
     </article>
     <article class="gnode" data-state="now">
-      <a class="chip" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Gate 1</b>Data</a>
+      <button class="chip" type="button" aria-expanded="false"><b>Gate 1</b>Data<span class="car" aria-hidden="true">&#9662;</span></button>
       <div class="gcard">
         <p class="steps">Input Data, Create Golden Orders, Determine Architecture, Lock in 3rd Party Systems</p>
         <ul>
@@ -220,10 +227,11 @@
           <li>Data Handling Policy, Product Type speeds, Terms and Conditions</li>
           <li>Third-party integrations</li>
         </ul>
+        <p class="glink"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564/list/1218414929412639" target="_blank" rel="noopener">Work in Asana</a></p>
       </div>
     </article>
     <article class="gnode" data-state="next">
-      <a class="chip" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Gate 2</b>Prototype</a>
+      <button class="chip" type="button" aria-expanded="false"><b>Gate 2</b>Prototype<span class="car" aria-hidden="true">&#9662;</span></button>
       <div class="gcard">
         <p class="steps">Prototype Client Storefronts, Release to Team, Final Modifications</p>
         <ul>
@@ -234,10 +242,11 @@
           <li>Final UI/UX tweaks</li>
           <li>Decide Codeograph's role</li>
         </ul>
+        <p class="glink"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564/list/1218414929412640" target="_blank" rel="noopener">Work in Asana</a></p>
       </div>
     </article>
     <article class="gnode" data-state="next">
-      <a class="chip" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Gate 3</b>Build</a>
+      <button class="chip" type="button" aria-expanded="false"><b>Gate 3</b>Build<span class="car" aria-hidden="true">&#9662;</span></button>
       <div class="gcard">
         <p class="steps">Build Engines, Connect front and back</p>
         <ul>
@@ -247,10 +256,11 @@
           <li>Connect Command Center, the App, the Storefronts</li>
           <li>ORB operational, end to end</li>
         </ul>
+        <p class="glink"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564/list/1218414929412641" target="_blank" rel="noopener">Work in Asana</a></p>
       </div>
     </article>
     <article class="gnode" data-state="next">
-      <a class="chip" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Gate 4</b>Readiness</a>
+      <button class="chip" type="button" aria-expanded="false"><b>Gate 4</b>Readiness<span class="car" aria-hidden="true">&#9662;</span></button>
       <div class="gcard">
         <p class="steps">Data Migration</p>
         <ul>
@@ -260,10 +270,11 @@
           <li>Full Knowledge Base update</li>
           <li>Team readiness</li>
         </ul>
+        <p class="glink"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564/list/1218414929412642" target="_blank" rel="noopener">Work in Asana</a></p>
       </div>
     </article>
     <article class="gnode" data-state="next">
-      <a class="chip" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Gate 5</b>Launch</a>
+      <button class="chip" type="button" aria-expanded="false"><b>Gate 5</b>Launch<span class="car" aria-hidden="true">&#9662;</span></button>
       <div class="gcard">
         <p class="steps">Launch, Migration Catch-up, Shut down the old systems, Update the Knowledge Base</p>
         <ul>
@@ -273,10 +284,11 @@
           <li>Systems shutdown</li>
           <li>Final Knowledge Base sweep</li>
         </ul>
+        <p class="glink"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564/list/1218414929412643" target="_blank" rel="noopener">Work in Asana</a></p>
       </div>
     </article>
   </section>
-  <p class="gnote">Gates close in order. The team works the open gate. Each pays a bonus when it closes. <span class="legend-inline"><i class="d"></i>Done <i class="n"></i>Now <i class="x"></i>Next</span></p>
+  <p class="gnote">Gates close in order. The team works the open gate. <span class="hint">Click any gate to show or hide the work.</span> <span class="legend-inline"><i class="d"></i>Done <i class="n"></i>Now <i class="x"></i>Next</span></p>
 
 
   <div class="band"><h2>The Interfaces<span>Front of House</span></h2></div>
@@ -409,7 +421,7 @@
   <section class="gov">
     <h2>Reference</h2>
     <div><p class="t">This page is the build plan</p><p class="d">Kickoff Prep and five gates in a line, the work summarized under each. Bri keeps it current by hand (Ledger 162, 217).</p></div>
-    <div><p class="t">Rock Doc</p><p class="d">Outcome, scope, gates, and the gate bonus.</p><p class="links"><a href="https://docs.google.com/document/d/1j60NxjDuUeT1oShuLFKsaWkSNDXMduxIqQZ7MGnM1_M/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">Rock Doc</p><p class="d">Outcome, scope, and the gates.</p><p class="links"><a href="https://docs.google.com/document/d/1j60NxjDuUeT1oShuLFKsaWkSNDXMduxIqQZ7MGnM1_M/edit" target="_blank" rel="noopener">Open</a></p></div>
     <div><p class="t">Decisions Ledger</p><p class="d">Every decision, numbered and locked.</p><p class="links"><a href="https://docs.google.com/document/d/195f8KNqcfQ2hPslO57ah1Im3UkhSMY839dnVbYHdHQ8/edit" target="_blank" rel="noopener">Open</a></p></div>
     <div><p class="t">Shared Data Dictionary</p><p class="d">The naming authority for the whole platform.</p><p class="links"><a href="https://docs.google.com/spreadsheets/d/1R2a0tvw4jHBC3Ml3TdUMPwY1gvD2m4kIBneU1UT7wzQ/edit" target="_blank" rel="noopener">Open</a></p></div>
     <div><p class="t">The Rock in Asana</p><p class="d">Build The Mailworks Platform: Kickoff Prep and five gate milestones on the Rock task; every task in the working project, by engine and surface.</p><p class="links"><a href="https://app.asana.com/1/1123678473972560/project/1211925376260014/task/1216823491209420" target="_blank" rel="noopener">The Rock</a> <a href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener">The project</a></p></div>
@@ -424,6 +436,14 @@
     clearTimeout(t); t=setTimeout(()=>note.classList.remove('show'),2200);
   }));
 })();
+</script>
+<script>
+  (function(){
+    var line=document.querySelector('.gateline'); if(!line) return;
+    var chips=line.querySelectorAll('.chip');
+    function set(open){ line.classList.toggle('open',open); chips.forEach(function(c){c.setAttribute('aria-expanded',open?'true':'false');}); }
+    chips.forEach(function(c){ c.addEventListener('click',function(){ set(!line.classList.contains('open')); }); });
+  })();
 </script>
 </body>
 </html>
