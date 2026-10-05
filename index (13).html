@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Manifest: Build The Mailworks Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --space:#061A2C; --space-2:#0B3B60; --deep-navy:#072A45; --navy:#0B3B60;
+    --hull:#0E2E4C; --hull-edge:rgba(185,214,228,.22); --module:#123A5E; --module-edge:rgba(185,214,228,.16);
+    --pink:#E81F76; --turquoise:#44BDA9; --turquoise-dim:rgba(68,189,169,.28); --arctic:#D6EEF4; --arctic-2:#B9D6E4;
+    --ink:#0F2233; --body:#3B4F63; --muted:#8A9AA8; --line:#DCE5EE; --white:#FFFFFF;
+    --font:"Proxima Nova","Montserrat",system-ui,sans-serif;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--space);color:var(--arctic);font-family:var(--font);font-size:15px;line-height:1.45}
+  body{background:
+      radial-gradient(1200px 520px at 50% -140px, rgba(68,189,169,.18), transparent 60%),
+      radial-gradient(900px 600px at 85% 110%, rgba(232,31,118,.12), transparent 60%),
+      linear-gradient(180deg,#061A2C 0%,#07223A 55%,#061A2C 100%)}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;
+      background-image:linear-gradient(rgba(185,214,228,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(185,214,228,.06) 1px,transparent 1px);
+      background-size:48px 48px;mask-image:linear-gradient(180deg,rgba(0,0,0,.9),transparent 70%)}
+  a{color:var(--turquoise);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative}
+
+  /* Mast */
+  header .wrap{padding:30px 24px 10px;display:flex;justify-content:space-between;align-items:flex-end;gap:28px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--arctic-2);margin-bottom:14px}
+  .brand i{width:10px;height:10px;border-radius:50%;background:var(--pink);box-shadow:0 0 14px rgba(232,31,118,.9)}
+  h1{margin:0;font-size:44px;font-weight:900;letter-spacing:-0.02em;line-height:.98;color:var(--white)}
+  h1 small{display:block;font-size:15px;font-weight:600;color:var(--arctic-2);margin-top:10px;letter-spacing:0}
+  .how{max-width:50ch;font-size:14px;color:var(--arctic-2);margin:0 0 6px;line-height:1.55}
+  .how b{color:var(--white)}
+
+
+  .chip{font-family:inherit;width:100%;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;border:1.5px solid var(--turquoise-dim);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;color:var(--arctic);text-decoration:none;background:rgba(68,189,169,.06)}
+  .chip b{color:var(--turquoise);letter-spacing:.12em;text-transform:uppercase;font-size:10px}
+  .gcard{margin-top:10px;background:var(--hull);border:1px solid var(--hull-edge);border-radius:var(--radius);padding:12px 12px 10px}
+  .gcard .steps{margin:0 0 8px;font-size:11.5px;color:var(--turquoise);font-weight:700;line-height:1.4}
+  .gcard ul{margin:0;padding-left:16px;font-size:12px;color:var(--arctic);line-height:1.45}
+  .gcard li{margin:2px 0}
+  .glink{margin:10px 0 0;font-size:12px}
+  .glink a{color:var(--turquoise);font-weight:800;text-decoration:none}
+  .glink a:hover{text-decoration:underline}
+  .gnote{font-size:12px;color:var(--arctic-2);margin:6px 2px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .legend-inline i{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 5px 0 12px;vertical-align:-1px}
+  .legend-inline .d{background:var(--turquoise)} .legend-inline .n{background:var(--pink)}
+
+  /* The approach and the two-column plan */
+  .approach{margin:26px 0 0;background:var(--hull);border:1px solid var(--hull-edge);border-radius:var(--radius);padding:16px 18px}
+  .approach .steps{margin:0 0 6px;font-size:11.5px;color:var(--turquoise);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+  .approach p{margin:0;font-size:14px;color:var(--arctic-2);line-height:1.55;max-width:110ch}
+  .approach p b{color:var(--white)}
+  .agrid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-top:4px}
+  @media (max-width:860px){.agrid{grid-template-columns:1fr}}
+  .approach .ah{margin:0 0 4px;font-size:15px;font-weight:900;color:var(--white)}
+  .approach .agrid p{max-width:none;margin:0 0 8px}
+  .approach .agrid ul,.approach .agrid ol{margin:0;padding-left:18px;font-size:14px;color:var(--arctic-2);line-height:1.5}
+  .approach .agrid li{margin:3px 0}
+  .approach .fine{margin:8px 0 0;color:var(--white);font-weight:700}
+  .plan{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 8px}
+  @media (max-width:760px){.plan{grid-template-columns:1fr}}
+  .plan .chip{padding:12px 16px;font-size:13px}
+  .plan .chip:hover{text-decoration:none}
+  .plan .chip[data-col="now"]{border-color:var(--pink);box-shadow:0 0 12px rgba(232,31,118,.35);color:#fff}
+  .plan .chip[data-col="now"] b{color:var(--pink)}
+  .mark{display:inline-block;align-self:flex-start;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:2px 8px;margin:0 0 6px;border:1.5px solid var(--turquoise-dim);color:var(--arctic-2)}
+  .mark.now{border-color:var(--pink);color:#fff;background:rgba(232,31,118,.14)}
+  .mark.store{border-color:var(--turquoise);color:var(--white);background:rgba(68,189,169,.14)}
+
+  /* Section headings, per Bri */
+  .band{display:flex;align-items:center;gap:14px;margin:30px 0 14px}
+  .band h2{margin:0;font-size:13px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--white);white-space:nowrap}
+  .band h2 span{color:var(--turquoise);font-weight:700;letter-spacing:.02em;text-transform:none;font-size:13px;margin-left:10px}
+  .band::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--turquoise-dim),transparent)}
+
+  /* Front of house: viewports floating above the hull */
+  .front{position:relative;z-index:2;display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:end;padding:0 24px}
+  @media (max-width:900px){.front{grid-template-columns:1fr;padding:0 10px}}
+  .card{background:var(--white);color:var(--ink);border-radius:var(--radius);padding:20px 22px;
+        box-shadow:0 30px 60px -24px rgba(0,0,0,.65),0 0 0 1px rgba(185,214,228,.35),0 0 40px -10px rgba(68,189,169,.25)}
+  .card .who{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--pink);margin:0 0 4px}
+  .card .t{font-size:24px;font-weight:900;letter-spacing:-0.01em;line-height:1.1;margin:0 0 8px;color:var(--navy)}
+  .card .d{font-size:14px;color:var(--body);margin:0 0 14px;max-width:56ch}
+  .links{display:flex;gap:8px;flex-wrap:wrap}
+  .card .links a{font-size:13px;font-weight:800;border:2px solid var(--line);border-radius:999px;padding:6px 14px;color:var(--navy);background:#fff}
+  .card .links a.primary{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 8px 20px -8px rgba(232,31,118,.7)}
+  .card .links a:hover{text-decoration:none;border-color:var(--navy)}
+  .card .links a.primary:hover{background:#C91766;border-color:#C91766}
+  .appwrap{position:relative;padding-top:36px}
+  .deck{position:absolute;top:0;right:20px;display:flex;gap:6px;align-items:flex-end}
+  .deck a{display:block;background:var(--arctic);border-radius:10px 10px 0 0;padding:8px 12px 12px;font-size:12.5px;font-weight:800;color:var(--navy);transform:translateY(6px)}
+  .deck a:nth-child(2){transform:translateY(2px)} .deck a:nth-child(3){transform:translateY(4px)} .deck a:nth-child(4){transform:translateY(6px)}
+  .deck a:hover{text-decoration:none;transform:translateY(0);background:var(--white)}
+  .deck button.soon{font:inherit;cursor:pointer;border:0;display:block;background:var(--arctic);border-radius:10px 10px 0 0;padding:8px 12px 12px;font-size:12.5px;font-weight:800;color:var(--navy);transform:translateY(6px)}
+  .deck button.soon:nth-of-type(1){transform:translateY(2px)} .deck button.soon:nth-of-type(2){transform:translateY(4px)}
+  .deck button.soon:hover{background:var(--white);transform:translateY(0)}
+  .soon-note{position:absolute;right:0;top:-26px;font-size:12px;font-weight:800;color:var(--white);background:var(--pink);border-radius:999px;padding:3px 10px;opacity:0;transition:opacity .15s}
+  .soon-note.show{opacity:1}
+  .deck a.label{background:transparent;color:var(--arctic-2);font-weight:600;cursor:default;padding-right:0;transform:none}
+
+  /* Intake contract: the power line down into the hull */
+  .contract{position:relative;z-index:2;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin:10px 24px 0;height:120px}
+  .contract .wire{width:3px;height:100%;background:linear-gradient(180deg,var(--pink),var(--turquoise));border-radius:2px;box-shadow:0 0 18px rgba(68,189,169,.55);position:relative}
+  .contract .wire::before,.contract .wire::after{content:"";position:absolute;left:-5px;width:13px;height:13px;border-radius:50%;background:var(--white)}
+  .contract .wire::before{top:-4px;box-shadow:0 0 12px rgba(232,31,118,.9)} .contract .wire::after{bottom:-4px;background:var(--turquoise);box-shadow:0 0 12px rgba(68,189,169,.9)}
+  .contract p{margin:0;font-size:13.5px;color:var(--arctic-2);max-width:42ch}
+  .contract p b{color:var(--white)}
+  .contract p:first-child{text-align:right;justify-self:end}
+
+  /* Back of house: the hull */
+  .hull{position:relative;margin-top:-40px;padding:70px 24px 26px;border-radius:22px 22px 18px 18px;
+        background:linear-gradient(180deg,var(--hull) 0%,#0B2740 100%);
+        box-shadow:0 0 0 1px var(--hull-edge),inset 0 1px 0 rgba(255,255,255,.08),0 40px 80px -40px rgba(0,0,0,.8)}
+  .hull::before{content:"";position:absolute;left:24px;right:24px;top:16px;height:2px;border-radius:2px;
+        background:linear-gradient(90deg,transparent,var(--turquoise),transparent);opacity:.7;box-shadow:0 0 16px var(--turquoise)}
+  .hull p.lead{margin:0 0 18px;font-size:14.5px;max-width:74ch;color:var(--arctic-2)}
+  .hull p.lead b{color:var(--white)}
+  details.why{margin:0 0 18px}
+  details.why summary{list-style:none;cursor:pointer;font-size:14.5px;color:var(--arctic-2);max-width:74ch}
+  details.why summary::-webkit-details-marker{display:none}
+  details.why summary b{color:var(--white)}
+  details.why summary .more{color:var(--turquoise);font-weight:800;margin-left:6px}
+  details.why[open] summary .more{display:none}
+  details.why p{margin:10px 0 0;font-size:14.5px;max-width:74ch;color:var(--arctic-2)}
+  details.why p b{color:var(--white)}
+  details.data{margin-top:18px;border-top:1px solid rgba(185,214,228,.14);padding-top:14px}
+  details.data summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--white)}
+  details.data summary::-webkit-details-marker{display:none}
+  details.data summary::after{content:"Show";font-weight:700;letter-spacing:0;text-transform:none;color:var(--turquoise);font-size:12.5px}
+  details.data[open] summary::after{content:"Hide"}
+  details.data p.note{margin:8px 0 12px;font-size:13px;color:var(--arctic-2);max-width:74ch}
+  .dtable{width:100%;border-collapse:collapse;font-size:13px}
+  .dtable th{text-align:left;font-weight:800;color:var(--arctic-2);padding:6px 8px;border-bottom:1px solid rgba(185,214,228,.22);font-size:12px}
+  .dtable td{padding:7px 8px;border-bottom:1px solid rgba(185,214,228,.1);color:var(--arctic)}
+  .dtable td.eng{font-weight:900;color:var(--white);white-space:nowrap}
+  .dtable td.own{font-weight:800;color:var(--white)}
+  .dtable tr[data-state="next"] td.own{color:var(--arctic-2);font-weight:600}
+  .dtable td.st::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;border:2px solid var(--arctic-2);box-sizing:border-box;vertical-align:-1px;margin-right:7px}
+  .dtable tr[data-state="now"] td.st::before{background:var(--pink);border-color:var(--pink);box-shadow:0 0 8px rgba(232,31,118,.9)}
+  .dtable tr[data-state="done"] td.st::before{background:var(--turquoise);border-color:var(--turquoise)}
+  .dtable tr[data-state="done"] td{color:var(--arctic-2)}
+  .engines{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media (max-width:1000px){.engines{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:640px){.engines{grid-template-columns:1fr 1fr}}
+  .tile{position:relative;background:var(--module);border-radius:12px;padding:14px 14px 12px;display:flex;flex-direction:column;min-height:150px;
+        box-shadow:0 0 0 1px var(--module-edge),inset 0 1px 0 rgba(255,255,255,.06)}
+  .tile::before{content:"";position:absolute;left:14px;right:14px;top:0;height:2px;border-radius:2px;background:var(--turquoise);opacity:.7}
+  .tile .t{font-weight:900;font-size:15px;line-height:1.2;margin:6px 0 4px;color:var(--white)}
+  .tile .d{font-size:12.5px;color:var(--arctic-2);flex:1;margin:0 0 12px;line-height:1.45}
+  .tile .links a,.spine .links a{font-size:12px;font-weight:800;color:var(--white);border:1.5px solid var(--turquoise-dim);border-radius:999px;padding:4px 10px}
+  .tile .links a:hover,.spine .links a:hover{background:var(--turquoise);color:var(--ink);text-decoration:none;border-color:var(--turquoise)}
+
+  .spine{margin-top:14px;background:linear-gradient(90deg,#0A2238,#0D2C48);border-radius:14px;padding:16px 18px;display:grid;grid-template-columns:1.6fr 1fr;gap:16px;
+         box-shadow:0 0 0 1px var(--module-edge),inset 0 0 40px rgba(232,31,118,.08)}
+  @media (max-width:800px){.spine{grid-template-columns:1fr}}
+  .spine .t{font-weight:900;font-size:19px;margin:0 0 4px;color:var(--white)}
+  .spine .d{font-size:13px;color:var(--arctic-2);margin:0 0 12px;max-width:62ch}
+  .spine .floor{border-left:2px dashed rgba(185,214,228,.3);padding-left:16px}
+  .spine .floor .t{font-size:16px}
+  .spine .t i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--pink);box-shadow:0 0 10px rgba(232,31,118,.9);margin-right:8px;vertical-align:2px}
+
+  /* Reference strip */
+  .gov{margin:34px 0 60px;padding-top:16px;border-top:1px solid rgba(185,214,228,.18);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px 24px}
+  .gov h2{grid-column:1/-1;margin:0 0 2px;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--arctic-2)}
+  .gov .t{font-weight:800;font-size:14px;margin:0 0 2px;color:var(--white)}
+  .gov .d{font-size:12.5px;color:var(--arctic-2);margin:0 0 6px}
+  .gov .links a{font-size:12.5px;font-weight:800}
+  .foot{font-size:12.5px;color:var(--muted);margin:0 0 48px;max-width:80ch}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div>
+      <div class="brand"><i></i>The Mailworks</div>
+      <h1>The Manifest<small>Build The Mailworks Platform: the plan, the whole ship, and where we are, on one screen.</small></h1>
+    </div>
+    <p class="how"><b>How to read it.</b> The top is the plan. The Interfaces are the screens people use. The Engine Room is everything behind them. Now and Later open the live lists in Asana; each engine opens its drawing in the ERD.</p>
+  </div>
+</header>
+
+<main class="wrap">
+<!--
+  HOW TO UPDATE THE PLAN
+  Now and Later are two links into Asana; the lists live there, not here.
+  The approach block changes only by Ledger entry.
+-->
+  <section class="approach" aria-label="The approach">
+    <p class="steps">The approach, since October 2026</p>
+    <div class="agrid">
+      <div>
+        <p class="ah">What changed</p>
+        <p>We were going to build the whole platform before any Client saw it. Months of building, nothing new to touch. We are not doing that anymore.</p>
+        <p>Portal 1 keeps doing what it does today: orders, proofs, invoices, production, and delivery tracking. Our new platform sits in front of it and talks to it behind the scenes. Nobody logs into Portal 1 anymore, and no Client ever sees it.</p>
+      </div>
+      <div>
+        <p class="ah">Why</p>
+        <p>The Frasier Storefront. We built a real Client-facing site in a few weeks with Portal 1 running behind it, and it worked.</p>
+        <p>Building it showed us where the real pain is: nobody can see which designs exist or how they are built, and our Client data lives in spreadsheets. The floor is not the problem. Production runs well today and can wait.</p>
+      </div>
+      <div>
+        <p class="ah">What it buys us</p>
+        <ul>
+          <li>Clients get off Portal 1 in weeks, not months</li>
+          <li>Every Client gets a new home: a Storefront or the App</li>
+          <li>Client Services and the design team get one place to work, now</li>
+          <li>What we build now is the real thing; nothing gets rebuilt later</li>
+          <li>Our energy goes to Clients and revenue, not plumbing</li>
+        </ul>
+      </div>
+      <div>
+        <p class="ah">The order of operations</p>
+        <ol>
+          <li>Build the pieces Portal 1 is bad at: products, designs, Client records, mailing lists</li>
+          <li>Command Center V1 for our team, on top of those</li>
+          <li>Frasier moves onto the new platform first, then Audibel</li>
+          <li>Storefronts become a template; the App launches for everyone else</li>
+          <li>Billing, rebates, and our own design editor come next</li>
+          <li>Production moves last; then Portal 1 shuts down</li>
+        </ol>
+        <p class="fine">No launch date. The order is the plan.</p>
+      </div>
+    </div>
+  </section>
+  <section class="plan" aria-label="Now and Later">
+    <a class="chip" data-col="now" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Now</b>What the build team is doing in this stretch, in Asana</a>
+    <a class="chip" data-col="later" href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener"><b>Later</b>What we do not want to lose sight of, in Asana</a>
+  </section>
+  <p class="gnote">The team works Now. Later is the order things come in, not a schedule. The lists live in Asana so this page never goes stale.</p>
+
+  <div class="band"><h2>The Interfaces<span>Front of House</span></h2></div>
+  <div class="front">
+    <div class="appwrap">
+      <div class="deck">
+        <a class="label" tabindex="-1" aria-hidden="true">Storefronts, built on the same engines</a>
+        <button class="soon" type="button" data-note="Frasier Storefront: live for the Client today on Portal 1; first to rebuild on the engines">Frasier</button>
+        <a href="https://claude.ai/design/p/b8767317-f746-4609-ba7a-1296be1082a6?file=Audibel+Storefront.dc.html&via=share" target="_blank" rel="noopener">Audibel</a>
+        <button class="soon" type="button" data-note="CertaPro Storefront: after the Storefront becomes a template">CertaPro</button>
+        <button class="soon" type="button" data-note="CQ Storefront: after the Storefront becomes a template">CQ</button>
+        <span class="soon-note" id="soonNote" role="status" aria-live="polite"></span>
+      </div>
+      <div class="card">
+        <p class="who">Clients</p>
+        <p class="t">The App</p>
+        <p class="d">The Mailworks at app.themailworks.com: one ordering experience for every Client, from the first-time mailer to the Partner. A Client creates a Campaign, picks or requests a design, says who receives it and when, approves the proof, and pays. V1 launches without the design editor. Storefronts are the same experience shaped for one large Client on the same engines; they remove, never add.</p>
+        <div class="links"><a class="primary" href="https://claude.ai/design/p/3ab16d61-7054-4d22-9b78-dea73e6ff137?file=The+App.dc.html&via=share" target="_blank" rel="noopener">Open the App prototype</a> <a href="https://claude.ai/design/p/b8767317-f746-4609-ba7a-1296be1082a6?file=Audibel+Storefront.dc.html&via=share" target="_blank" rel="noopener">Open the Audibel Storefront prototype</a></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="who">Employees</p>
+      <p class="t">Command Center</p>
+      <p class="d">One internal shell for every seat: Office Desk for the office, Production Floor for the plant. The same engines underneath, seen from our side. Its Design workspace is the V1 Design Engine, where the design team organizes every design for every Storefront.</p>
+      <div class="links"><a class="primary" href="https://claude.ai/design/p/a83e61ef-55d7-429f-b244-90bbb0aeea83?file=Command+Center.dc.html&via=share" target="_blank" rel="noopener">Open the Command Center prototype</a></div>
+    </div>
+  </div>
+
+  <div class="contract">
+    <p><b>One way in.</b> Every order, from the App or a Storefront, drops into the Engine Room through the same intake contract. In V1 the Engine Room hands it to Portal 1 through the service layer and shows back what Portal 1 creates.</p>
+    <div class="wire"></div>
+    <p>That is what makes the surfaces interchangeable and the engines reusable: <b>one set of engines underneath, three windows on top,</b> and the same IDs everywhere.</p>
+  </div>
+
+  <div class="hull">
+    <div class="band" style="margin-top:0"><h2>The Engine Room<span>Back of House</span></h2></div>
+    <p class="lead">Ten engines plus ORB, one model. <b>Engines never show their names</b> to a Client or an employee; they publish contracts, and the Interfaces above render them. Each tile carries its V1 build marker and links to the ERD, where its tables are drawn.</p>
+    <details class="why">
+      <summary><b>Why the dictionary and the ERD.</b> Every table the platform will have is named once and drawn once before anyone writes code.<span class="more">Read more</span></summary>
+      <p>The Shared Data Dictionary names every entity, field, and picklist, with the decision behind each. The ERD is the dictionary turned into a picture: one block per engine, every relationship citing the row that states it, every table marked Build now, Stored from Portal 1, or Model only. Build now means the table is built and filled in V1. Stored from Portal 1 means the table exists but Portal 1 writes it through the service layer and we only read it. Model only means the full table is created empty, so nothing is renamed or rebuilt later. <b>One rule for the build:</b> every ratified row in the dictionary must map to a named element in the built schema. If a row has no home in the code, the build is not done.</p>
+    </details>
+    <div class="engines">
+      <div class="tile"><span class="mark now">Build now</span><p class="t">Product Type</p><p class="d">What we sell, how each piece is produced, and what it costs. Published Rate times the Client's Rate Plan is the one price everywhere, written onto Portal 1 so the two never drift.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now</span><p class="t">Design</p><p class="d">The design library and the V1 organizing hub between what a Client sees and what exists in PlanetPress: Brands, Designs, Versions, Location Variations. Our own editor is V2.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now</span><p class="t">CRM</p><p class="d">Who our Clients are: Partners, Clients, Locations, Contacts, Team Members, Pipeline. One CRM for every Storefront and the App.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now, thin</span><p class="t">Recipient Data</p><p class="d">Who receives the mail: audiences, lists, territories, vendors, suppression, every recipient's history. Name and address never leave this engine.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now, thin</span><p class="t">Billing</p><p class="d">Invoices, payments, terms, postage money, sales tax, co-op. V1 holds Rate Plans and stores the invoices Portal 1 issues; the rest fills when Billing takes over.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark">Model only</span><p class="t">Rebate</p><p class="d">Partner rebate and MGI programs: who earns, how it accrues, how it pays out. Drawn at full shape, built when its turn comes.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now, thin</span><p class="t">Reporting</p><p class="d">Results: every piece mailed, matched to responses, rolled up any way you ask. The Frasier Storefront's reporting is the V1, fed by Portal 1 data and the matchback pipeline.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now, thin</span><p class="t">Communications</p><p class="d">Every message the platform sends, to a Client or to us. In V1 it carries design request threads and proof-ready and mailed notices; Portal 1's own emails are off.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark now">Build now</span><p class="t">Identity &amp; Access</p><p class="d">Who can log in and what they can see, for Clients and for us. The front doors sign in through it.</p><div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div></div>
+      <div class="tile"><span class="mark">The rules</span><p class="t">Platform Governance</p><p class="d">The rules the engines answer to: the Decisions Ledger, the Shared Data Dictionary, the Rulebook, the ERD, this Manifest.</p><div class="links"><a href="https://docs.google.com/spreadsheets/d/1R2a0tvw4jHBC3Ml3TdUMPwY1gvD2m4kIBneU1UT7wzQ/edit" target="_blank" rel="noopener">Data Dictionary</a> <a href="https://docs.google.com/document/d/195f8KNqcfQ2hPslO57ah1Im3UkhSMY839dnVbYHdHQ8/edit" target="_blank" rel="noopener">Ledger</a></div></div>
+    </div>
+    <div class="spine">
+      <div>
+        <p class="t"><i></i>ORB <span class="mark store" style="vertical-align:3px;margin-left:8px">Stored from Portal 1, then Model only</span></p>
+        <p class="d">Owns every order from submission to the mailbox: intake, merge into Jobs, Job Sheets, Drops, delivery tracking, the permanent record. The spine every other engine plugs into. In V1 Portal 1 does this work; the platform stores and shows the Orders, proofs, invoices, and delivery it creates, and Campaigns live here from day one. ORB takes production last.</p>
+        <div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div>
+      </div>
+      <div class="floor">
+        <p class="t">The Floor <span class="mark" style="vertical-align:3px;margin-left:8px">Model only</span></p>
+        <p class="d">A module inside ORB: production execution, department reports, machines, inventory, floor screens. If the Floor goes down, orders still come in. Production stays on the systems that work today until ORB is ready.</p>
+        <div class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">In the ERD</a></div>
+      </div>
+    </div>
+
+    <details class="data">
+      <summary>Where V1 data comes from</summary>
+      <p class="note">No spreadsheets sit behind the engines any more. In V1 the data arrives four ways.</p>
+      <table class="dtable">
+        <thead><tr><th>Data</th><th>Source</th><th>How it arrives</th></tr></thead>
+        <tbody>
+          <tr><td class="eng">Orders, proofs, invoices, delivery</td><td>Portal 1</td><td>Through the service layer; the platform stores and shows them and never writes them</td></tr>
+          <tr><td class="eng">Products, routes, speeds, rates</td><td>The Product Type collection workbook</td><td>Loaded into the Product Type Engine, which writes prices onto Portal 1</td></tr>
+          <tr><td class="eng">Clients, Locations, Team Members, Designs</td><td>Live Client data</td><td>Seeded as each Client moves to a Storefront or the App; Frasier first</td></tr>
+          <tr><td class="eng">Recipient data</td><td>The Recipient Data Engine</td><td>Lists and audiences stay inside it; only counts and results leave; no real Client or recipient data outside Production</td></tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <section class="gov">
+    <h2>Reference</h2>
+    <div><p class="t">This page is the plan</p><p class="d">Now and Later in two columns, the Interfaces, the Engine Room. Bri keeps it current by hand; the Decisions Ledger is the source of truth where they differ.</p></div>
+    <div><p class="t">Decisions Ledger</p><p class="d">Every decision, numbered and locked.</p><p class="links"><a href="https://docs.google.com/document/d/195f8KNqcfQ2hPslO57ah1Im3UkhSMY839dnVbYHdHQ8/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">Shared Data Dictionary</p><p class="d">The naming authority for the whole platform.</p><p class="links"><a href="https://docs.google.com/spreadsheets/d/1R2a0tvw4jHBC3Ml3TdUMPwY1gvD2m4kIBneU1UT7wzQ/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">ERD v1</p><p class="d">The dictionary drawn: every table, every connection, every build marker.</p><p class="links"><a href="https://drive.google.com/drive/folders/19PPxdkpiIUypHmvFxLuX35x2M3i8A-Ho" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">Rulebook</p><p class="d">Every value and every word the App renders, with the decision behind each.</p><p class="links"><a href="https://docs.google.com/document/d/1iWthEab_QnDn9oi-TsLaM8tdcR-iAfvhDNJe4PJ2XlI/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">Tech Stack</p><p class="d">What the platform runs on, decided and open.</p><p class="links"><a href="https://docs.google.com/document/d/186HzmLkbvoTYDLfa2hNUYTMbnru179IoRzpr3f7y5VM/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">Kickoff Doc</p><p class="d">Why the approach changed and the Portal 1 tickets that make it work.</p><p class="links"><a href="https://docs.google.com/document/d/1DplYAZd0_Xm-BJOludthVYug-N3S3El4a41q0Covbbg/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">Shell Standard</p><p class="d">One design system, two shells, one nav model.</p><p class="links"><a href="https://docs.google.com/document/d/1UxWjBLCm43OF4B3OpX2wMjOHQaknTqTWB8TIviI9UqU/edit" target="_blank" rel="noopener">Open</a></p></div>
+    <div><p class="t">The Rock in Asana</p><p class="d">Build The Mailworks Platform: Now, Later, and the Resources section with every document above.</p><p class="links"><a href="https://app.asana.com/1/1123678473972560/project/1218401939999564" target="_blank" rel="noopener">The project</a></p></div>
+  </section>
+  <p class="foot">Front of House and Back of House are explanatory phrases on this page only. The dictionary nouns are the Engine Room, the App, Storefronts, Command Center, Office Desk, Production Floor, and the Floor.</p>
+</main>
+<script>
+(function(){
+  const note=document.getElementById('soonNote'); let t;
+  document.querySelectorAll('.deck .soon').forEach(b=>b.addEventListener('click',()=>{
+    note.textContent=b.getAttribute('data-note')||(b.textContent+' Storefront: coming soon'); note.classList.add('show');
+    clearTimeout(t); t=setTimeout(()=>note.classList.remove('show'),2200);
+  }));
+})();
+</script>
+</body>
+</html>
